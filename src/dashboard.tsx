@@ -27,6 +27,7 @@ export default class Dashboard extends React.Component {
     this.history = this.history.bind(this)
     this.addNewTodo = this.addNewTodo.bind(this)
     this.userSelected = this.userSelected.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
   }
 
   handleTodos() {
@@ -39,6 +40,22 @@ export default class Dashboard extends React.Component {
     this.setState({
       tabSelected: "addTodo"
     })
+  }
+
+  handleEdit(text, completed){
+    let history ={
+      type: "UPDATED",
+      id: uuid(),
+      user_id: this.state.activeUserId,
+      text: text,
+      time: new Date(),
+      admin: this.state.currentUser
+
+    }
+    this.setState({
+      history: [...this.state.history, history]
+    })
+
   }
 
   history() {
@@ -123,7 +140,7 @@ export default class Dashboard extends React.Component {
               <div>
                 {this.state.tabSelected !== "history" &&
                   this.state.todos.map(o =>
-                    <ListTodos {...o} />)}
+                    <ListTodos {...o} handleEdit ={this.handleEdit}/>)}
               </div>
               <div>
                 {this.state.tabSelected === "history" &&

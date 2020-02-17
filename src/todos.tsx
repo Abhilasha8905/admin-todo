@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 
 
-const ListTodos = ({ completed, title }) => {
+const ListTodos = ({ completed, title,handleEdit }) => {
   const [isEditing, toggleIsEditing] = React.useState(false);
   const [text, updateText] = React.useState(title);
   const [completed, updateCompleted] = React.useState(completed);
@@ -15,12 +15,15 @@ const ListTodos = ({ completed, title }) => {
 
 
   }
+ 
   function handleToggleUpdate(e) {
     toggleIsEditing(false);
+    handleEdit(text, completed)
   }
 
   function handleClick(e) {
     updateCompleted(!completed)
+    handleEdit(text, completed)
   }
 
   return (
@@ -34,7 +37,7 @@ const ListTodos = ({ completed, title }) => {
             <Input addon type="checkbox" aria-label="Checkbox for following text input" checked={completed} onChange={e => handleClick(e)} />
           </InputGroupText>
         </InputGroupAddon>
-        <Input value={text} onChange={evt =>  (evt)} />
+        <Input value={text} onChange={evt => editText (evt)} />
       </InputGroup>
 
           </td>

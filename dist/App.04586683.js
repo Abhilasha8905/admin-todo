@@ -49277,7 +49277,8 @@ var reactstrap_3 = require("reactstrap");
 
 var ListTodos = function ListTodos(_a) {
   var completed = _a.completed,
-      title = _a.title;
+      title = _a.title,
+      handleEdit = _a.handleEdit;
 
   var _b = React.useState(false),
       isEditing = _b[0],
@@ -49298,10 +49299,12 @@ var ListTodos = function ListTodos(_a) {
 
   function handleToggleUpdate(e) {
     toggleIsEditing(false);
+    handleEdit(text, completed);
   }
 
   function handleClick(e) {
     updateCompleted(!completed);
+    handleEdit(text, completed);
   }
 
   return React.createElement(reactstrap_1.Table, null, React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", null, React.createElement(reactstrap_3.InputGroup, null, React.createElement(reactstrap_3.InputGroupAddon, {
@@ -49317,7 +49320,7 @@ var ListTodos = function ListTodos(_a) {
   }))), React.createElement(reactstrap_3.Input, {
     value: text,
     onChange: function onChange(evt) {
-      return evt;
+      return editText(evt);
     }
   }))), React.createElement("td", null, React.createElement(reactstrap_2.Button, {
     color: "primary",
@@ -49748,7 +49751,7 @@ function (_super) {
 
   History.prototype.render = function () {
     console.log(this.props);
-    return React.createElement("div", null, React.createElement(reactstrap_1.Jumbotron, null, this.props.type === "ADDED_TODO" && React.createElement("p", null, this.props.text + " is created at " + this.props.time + " by " + this.props.admin), this.props.type === "MARKED_COMPLETED" && React.createElement("p", null, " ", this.props.text + " is marked completed at " + this.props.time + " by " + this.props.admin), this.props.type === "UPDATED" && React.createElement("p", null, this.props.text + " is marked completed at " + this.props.time + " by " + this.props.admin)));
+    return React.createElement("div", null, React.createElement(reactstrap_1.Jumbotron, null, this.props.type === "ADDED_TODO" && React.createElement("p", null, this.props.text + " is created at " + this.props.time + " by " + this.props.admin), this.props.type === "MARKED_COMPLETED" && React.createElement("p", null, " ", this.props.text + " is marked completed at " + this.props.time + " by " + this.props.admin), this.props.type === "UPDATED" && React.createElement("p", null, this.props.text + " is updated at " + this.props.time + " by " + this.props.admin)));
   };
 
   return History;
@@ -49762,6 +49765,8 @@ module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
 },{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"dashboard.tsx":[function(require,module,exports) {
 "use strict";
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var __extends = this && this.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -49881,6 +49886,7 @@ function (_super) {
     _this.history = _this.history.bind(_this);
     _this.addNewTodo = _this.addNewTodo.bind(_this);
     _this.userSelected = _this.userSelected.bind(_this);
+    _this.handleEdit = _this.handleEdit.bind(_this);
     return _this;
   }
 
@@ -49893,6 +49899,20 @@ function (_super) {
   Dashboard.prototype.addTodo = function () {
     this.setState({
       tabSelected: "addTodo"
+    });
+  };
+
+  Dashboard.prototype.handleEdit = function (text, completed) {
+    var history = {
+      type: "UPDATED",
+      id: v1_1.default(),
+      user_id: this.state.activeUserId,
+      text: text,
+      time: new Date(),
+      admin: this.state.currentUser
+    };
+    this.setState({
+      history: __spreadArrays(this.state.history, [history])
     });
   };
 
@@ -49959,7 +49979,9 @@ function (_super) {
       color: "info",
       onClick: this.addTodo
     }, " Add Todo"))))), React.createElement(reactstrap_1.Row, null, React.createElement(reactstrap_1.Col, null, React.createElement("div", null, React.createElement("div", null, this.state.tabSelected !== "history" && this.state.todos.map(function (o) {
-      return React.createElement(todos_1.default, o);
+      return React.createElement(todos_1.default, _extends({}, o, {
+        handleEdit: _this.handleEdit
+      }));
     })), React.createElement("div", null, this.state.tabSelected === "history" && this.state.history.map(function (o) {
       return React.createElement(history_1.default, o);
     })))), this.state.tabSelected === "addTodo" && React.createElement(reactstrap_1.Col, null, React.createElement(addTodo_1.default, {
@@ -50029,7 +50051,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60988" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51383" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

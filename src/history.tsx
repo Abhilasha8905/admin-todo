@@ -16,7 +16,7 @@ export default class History extends React.Component {
                     {this.props.type === "MARKED_COMPLETED" &&
                         < p > {this.props.text + " is marked completed at " + this.props.time + " by " + this.props.admin}</p>}
                     {this.props.type === "UPDATED" &&
-                        <p>{this.props.text + " is marked completed at " + this.props.time + " by " + this.props.admin}</p>}
+                        <p>{this.props.text + " is updated at " + this.props.time + " by " + this.props.admin}</p>}
                 </Jumbotron>
             </div >
 
