@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.html"
+    "dev": "parcel src/index.html",
+    "build": "react-scripts build && echo '/*    /index.html   200' > build/_redirects"
   },
   "keywords": [],
   "author": "",
